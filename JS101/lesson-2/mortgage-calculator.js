@@ -13,6 +13,10 @@ function invalidInteger(number) {
   return !(Number(number) % 1 === 0);
 }
 
+function lessThanZero(number) {
+  return Number(number) < 0 || number.trimStart() === ''
+}
+
 function askLoan() {
   prompt('What is the loan amount?');
   let loanAmount = readline.question();
@@ -24,8 +28,8 @@ function askLoan() {
   return Number(loanAmount);
 }
 
-function invalidLoanValue(value) {
-  while (invalidInteger(value) || Number(value) < 0 || value.trimStart() === '') {
+function invalidLoanDuration(value) {
+  while (invalidInteger(value) || lessThanZero(value)) {
     prompt('Enter a whole number greater or equal to 0.');
     value = readline.question();
   }
@@ -37,11 +41,11 @@ function askLoanDuration() {
 
   prompt('Please enter the number of years.');
   let loanYears = readline.question();
-  loanYears = invalidLoanValue(loanYears);
+  loanYears = invalidLoanDuration(loanYears);
 
   prompt('Please enter the number of months.');
   let loanMonths = readline.question();
-  loanMonths = invalidLoanValue(loanMonths);
+  loanMonths = invalidLoanDuration(loanMonths);
 
   let totalMonths = calcYearsAndMonthsToTotalMonths(loanYears, loanMonths);
   prompt(`You have entered ${loanYears} years and ${loanMonths} months, which is the equal to ${totalMonths} months.`);
