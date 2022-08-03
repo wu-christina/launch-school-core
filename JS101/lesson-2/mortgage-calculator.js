@@ -4,36 +4,36 @@ function prompt(message) {
   console.log(`=> ${message}`);
 }
 
-function invalidLoan(number) {
+function invalidLoanValue(number) {
   return number.trimStart() === '' || Number.isNaN(Number(number)) ||
   Number(number) < 0 || Number(number) === 0 / -1;
-}
-
-function invalidInteger(number) {
-  return !(Number(number) % 1 === 0);
-}
-
-function lessThanZero(number) {
-  return Number(number) < 0 || number.trimStart() === ''
 }
 
 function askLoan() {
   prompt('What is the loan amount?');
   let loanAmount = readline.question();
 
-  while (invalidLoan(loanAmount)) {
+  while (invalidLoanValue(loanAmount)) {
     prompt('Please enter a number greater than 0.');
     loanAmount = readline.question();
   }
   return Number(loanAmount);
 }
 
+function invalidLoanDurationValue(number) {
+  return Number(number) % 1 !== 0 || number.trimStart() === '' || Number(number) < 0;
+}
+
 function invalidLoanDuration(value) {
-  while (invalidInteger(value) || lessThanZero(value)) {
+  while (invalidLoanDurationValue(value)) {
     prompt('Enter a whole number greater or equal to 0.');
     value = readline.question();
   }
   return value;
+}
+
+function calcYearsAndMonthsToTotalMonths (years, months) {
+  return (Number(years) * 12) + Number(months);
 }
 
 function askLoanDuration() {
@@ -51,10 +51,6 @@ function askLoanDuration() {
   prompt(`You have entered ${loanYears} years and ${loanMonths} months, which is the equal to ${totalMonths} months.`);
 
   return totalMonths;
-}
-
-function calcYearsAndMonthsToTotalMonths (years, months) {
-  return (Number(years) * 12) + Number(months);
 }
 
 function askAPRFormat() {
