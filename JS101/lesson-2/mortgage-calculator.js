@@ -25,7 +25,7 @@ function invalidLoanDurationValue(number) {
   return Number(number) % 1 !== 0 || number.trimStart() === '' || Number(number) < 0;
 }
 
-function invalidLoanDuration(value) {
+function askForValidLoanDuration(value) {
   while (invalidLoanDurationValue(value)) {
     prompt('Enter a whole number greater or equal to 0.');
     value = readline.question();
@@ -42,11 +42,11 @@ function askLoanDuration() {
 
   prompt('Please enter the number of years.');
   let loanYears = readline.question();
-  loanYears = invalidLoanDuration(loanYears);
+  loanYears = askForValidLoanDuration(loanYears);
 
   prompt('Please enter the number of months.');
   let loanMonths = readline.question();
-  loanMonths = invalidLoanDuration(loanMonths);
+  loanMonths = askForValidLoanDuration(loanMonths);
 
   let totalMonths = calcYearsAndMonthsToTotalMonths(loanYears, loanMonths);
   prompt(`You have entered ${loanYears} years and ${loanMonths} months, which is the equal to ${totalMonths} months.`);
