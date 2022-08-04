@@ -33,7 +33,8 @@ function invalidLoanDuration(value) {
 }
 
 function calcYearsAndMonthsToTotalMonths (years, months) {
-  return (Number(years) * 12) + Number(months);
+  let numberOfMonthsInAYear = 12;
+  return (Number(years) * numberOfMonthsInAYear) + Number(months);
 }
 
 function askLoanDuration() {
@@ -82,11 +83,12 @@ function askAPR() {
 
 function calculateMonthlyInterestRate(APRFormat, APR) {
   let monthlyInterestRate;
+  let numberOfMonthsInAYear = 12;
 
   if (APRFormat === '1') {
-    monthlyInterestRate = APR / 100 / 12;
+    monthlyInterestRate = APR / numberOfMonthsInAYear / 100;
   } else {
-    monthlyInterestRate = APR / 12;
+    monthlyInterestRate = APR / numberOfMonthsInAYear;
   }
 
   return monthlyInterestRate;
