@@ -7,7 +7,7 @@ const CHOICES = {
   lizard: { abbreviated: 'l', beats: ['paper', 'spock'] }
 };
 const WINNING_SCORE = 3;
-const MAX_LENGTH_OF_ABBREVIATED_CHOICE = 2;
+const MAX_LENGTH_OF_ABBREVIATED_CHOICE = 'sp'.length;
 
 let keys = Object.keys(CHOICES);
 let roundCount = 0;
@@ -129,6 +129,10 @@ function displayGrandWinner(playerScore, computerScore) {
   }
 }
 
+function someoneWon(playerScore, computerScore) {
+  return playerScore === WINNING_SCORE || computerScore === WINNING_SCORE;
+}
+
 function askToReplay() {
   prompt('Play again?\n (y/n)');
   let answer = readline.question();
@@ -158,7 +162,7 @@ while (true) {
   displayWinner(playerChoice, computerChoice, playerScore, computerScore);
   printRoundAndScore(playerChoice, computerChoice);
 
-  if (playerScore === WINNING_SCORE || computerScore === WINNING_SCORE) {
+  if (someoneWon(playerScore, computerScore)) {
     displayGrandWinner(playerScore, computerScore);
 
     let answer = askToReplay();
