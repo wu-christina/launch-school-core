@@ -1,14 +1,15 @@
 const readline = require('readline-sync');
-const VALID_CHOICES = ['r', 'p', 's', 'l', 'sp']; // r for rock, p for paper, s for scissors, l for lizard, sp for spock
-const WINNING_COMBOS = {
-  r: ['s', 'l'],
-  p: ['r', 'sp'],
-  s: ['p', 'l'],
-  l: ['p', 'sp'],
-  sp: ['r', 's']
+const CHOICES = {
+  rock: { abbreviated: 'r', beats: ['scissors', 'lizard'] },
+  paper: { abbreviated: 'p', beats: ['rock', 'spock'] },
+  scissors: { abbreviated: 's', beats: ['paper', 'lizard'] },
+  spock: { abbreviated: 'sp', beats: ['rock', 'scissors'] },
+  lizard: { abbreviated: 'l', beats: ['paper', 'spock'] }
 };
 const WINNING_SCORE = 3;
+const MAX_LENGTH_OF_ABBREVIATED_CHOICE = 2;
 
+let keys = Object.keys(CHOICES);
 let roundCount = 0;
 let playerScore = 0;
 let computerScore = 0;
@@ -24,7 +25,19 @@ function displayWelcomeMessage() {
 }
 
 function invalidPlayerChoices(choice) {
-  return !VALID_CHOICES.includes(choice);
+  if (choice.length > 0 && choice.length <= MAX_LENGTH_OF_ABBREVIATED_CHOICE) {
+    let keysArray = Object.keys(CHOICES);
+    let check = true;
+
+    for (let index = 0; index < keysArray.length; index++) {
+      if (CHOICES[keysArray[index]].abbreviated === choice) {
+        check = false;
+      }
+    }
+    return check;
+  } else {
+    return !Object.keys(CHOICES).includes(choice);
+  }
 }
 
 function askPlayerChoice() {
@@ -40,37 +53,55 @@ function askPlayerChoice() {
 }
 
 function getComputerChoice() {
-  let randomIndex = Math.floor(Math.random() * VALID_CHOICES.length);
-  let computerChoice = VALID_CHOICES[randomIndex];
+  let randomIndex = Math.floor(Math.random() * keys.length);
+  let computerChoice = keys[randomIndex];
 
   return computerChoice;
 }
 
-function playerWins(playerChoice, computerChoice) {
-  return WINNING_COMBOS[playerChoice].includes(computerChoice);
+function playerWins(winner, loser) {
+  let result;
+
+  for (let index = 0; index < keys.length; index++) {
+    if ((CHOICES[keys[index]].abbreviated === winner ||
+      keys[index] === winner) &&
+    (CHOICES[keys[index]].beats.includes(loser) ||
+    CHOICES[keys[index]].beats.includes(findNameOfAbbreviatedChoice(loser)))) {
+      result = true;
+      break;
+    } else {
+      result = false;
+    }
+  }
+  return result;
 }
 
-function convertAbbreviatedChoiceToName(choice) {
-  let choiceNames = {
-    r: 'rock',
-    p: 'paper',
-    s: 'scissors',
-    l: 'lizard',
-    sp: 'spock'
-  };
+function findNameOfAbbreviatedChoice(value) {
+  let result;
 
-  return choiceNames[choice];
+  for (let index = 0; index < keys.length; index++) {
+    if (CHOICES[keys[index]]['abbreviated'] === value) {
+      result = keys[index];
+    }
+  }
+  return result;
 }
 
 function displayWinner(playerChoice, computerChoice) {
-  let playerChoiceName = convertAbbreviatedChoiceToName(playerChoice);
-  let computerChoiceName = convertAbbreviatedChoiceToName(computerChoice);
+  let playerChoiceName;
 
-  console.log(`You picked ${playerChoiceName} and the computer picked ${computerChoiceName}.`);
+  if (playerChoice.length > MAX_LENGTH_OF_ABBREVIATED_CHOICE) {
+    playerChoiceName = playerChoice;
+  } else {
+    playerChoiceName = findNameOfAbbreviatedChoice(playerChoice);
+  }
+
+  console.log(`You picked ${playerChoiceName} and the computer picked ${computerChoice}.`);
 
   if (playerWins(playerChoice, computerChoice)) {
     console.log('You win this round!');
-  } else if (playerChoice === computerChoice) {
+  } else if (playerChoice === computerChoice ||
+    findNameOfAbbreviatedChoice(playerChoice) === computerChoice) {
     console.log("It's a tie!");
   } else {
     console.log(`Computer wins this round!`);
