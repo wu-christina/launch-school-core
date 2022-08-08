@@ -41,11 +41,11 @@ function invalidPlayerChoices(choice) {
 }
 
 function askPlayerChoice() {
-  prompt(`Make a choice: r for rock | p for paper | s for scissors | l for lizard | sp for spock`);
+  prompt(`Make a choice: rock(r) | paper(p) | scissors(s) | spock(sp | lizard(l)`);
   let playerChoice = readline.question().toLowerCase();
 
   while (invalidPlayerChoices(playerChoice)) {
-    prompt('Try again. Valid choices are: r for rock | p for paper | s for scissors | l for lizard | sp for spock');
+    prompt('Try again. Enter the word or the letter(s) in-between the parentheses:\nrock(r) | paper(p) | scissors(s) | spock(sp | lizard(l)');
     playerChoice = readline.question().toLowerCase();
   }
 
