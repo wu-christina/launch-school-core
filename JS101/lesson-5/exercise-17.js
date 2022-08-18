@@ -41,11 +41,11 @@ function generateUUID() {
   let sections = [8, 1, 4, 1, 4, 1, 4, 1, 12];
 
   sections.forEach((section) => {
-    for (let i = 1; i < section; i++) {
-      uuid += chars.charAt(Math.floor(Math.random() * chars.length))
-    }
-
-    if (section === 1) {
+    if (section !== 1) {
+      for (let i = 0; i < section; i++) {
+        uuid += chars.charAt(Math.floor(Math.random() * chars.length))
+      }
+    } else {
       uuid += '-';
     }
 
