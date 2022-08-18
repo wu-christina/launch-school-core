@@ -12,23 +12,44 @@ represented as a string. The value is typically broken into 5 sections in an
 
 Write a function that takes no arguments and returns a string that contains a UUID. */
 
+// function generateUUID() {
+//   let uuid = '';
+
+//   let chars = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f'];
+//   let sections = [8, 4, 4, 4, 12];
+
+//   sections.forEach((section, sectionIndex) => {
+//     for (let i = 0; i < section; i++) {
+//       uuid += chars[Math.floor(Math.random()* chars.length)];
+//     }
+
+//     if (sectionIndex < sections.length - 1) {
+//       uuid += '-';
+//     }
+
+//   });
+
+//   return uuid;
+// }
+
+// console.log(generateUUID())
+
+
 function generateUUID() {
   let uuid = '';
+  let chars = '0123456789abcdef';
+  let sections = [8, 1, 4, 1, 4, 1, 4, 1, 12];
 
-  let chars = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f'];
-  let sections = [8, 4, 4, 4, 12];
-
-  sections.forEach((section, sectionIndex) => {
-    for (let i = 0; i < section; i++) {
-      uuid += chars[Math.floor(Math.random()* chars.length)];
+  sections.forEach((section) => {
+    for (let i = 1; i < section; i++) {
+      uuid += chars.charAt(Math.floor(Math.random() * chars.length))
     }
 
-    if (sectionIndex < sections.length - 1) {
+    if (section === 1) {
       uuid += '-';
     }
 
   });
-
   return uuid;
 }
 
