@@ -21,7 +21,7 @@ const ACE_VALUE = 11;
 const ACE_CORRECTION = 10;
 const ROYAL_VALUE = 10;
 
-const WINNING_SCORE = 2;
+const WINNING_SCORE = 5;
 
 let round = 0;
 let playerScore = 0;
