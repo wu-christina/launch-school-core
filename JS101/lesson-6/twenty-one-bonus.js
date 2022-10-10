@@ -85,7 +85,7 @@ function total(cards) {
     }
   }
 
-  values.filter(value => value === 'A').forEach(_ => {
+  values.filter(value => value === 'Ace').forEach(_ => {
     if (totalValue > MAX_VALUE) totalValue -= ACE_CORRECTION;
   });
 
